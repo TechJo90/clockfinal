@@ -1,63 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="css/style.css" />
-    <title>World Clock - Jo Sesay</title>
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Clock</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
     <h1>World Clock</h1>
-    <div class="container">
-      <div class="city-selector">
-        <select id="city">
-          <option value="">Select a city...</option>
-          <option value="current">My current location</option>
-          <option value="America/Los_Angeles">Los Angeles</option>
-          <option value="Europe/Paris">Paris</option>
-          <option value="Asia/Tokyo">Tokyo</option>
-          <option value="Australia/Sydney">Sydney</option>
-          <option value="Africa/Lagos">Lagos</option>
-        </select>
-      </div>
-      
-      <div id="cities"></div>
-      
-      <div id="los-angeles" class="city">
-        <div>
-          <h2>Los Angeles</h2>
-          <div class="date"></div>
-          <a href="https://www.lacity.gov/" target="_blank" class="home-link">Go to Los Angeles homepage</a>
+    
+    <select class="city-select" id="citySelect">
+        <option value="">Select a city...</option>
+        <option value="NewYork">New York</option>
+        <option value="LosAngeles">Los Angeles</option>
+        <option value="Paris">Paris</option>
+        <option value="Tokyo">Tokyo</option>
+        <option value="Sydney">Sydney</option>
+        <option value="London">London</option>
+    </select>
+    
+    <div class="clock-container" id="localClock">
+        <div class="city-info">
+            <div>
+                <h2 class="city-name"><span id="localCityName">New York</span> (Your Location)</h2>
+                <p class="date" id="localDate">March 6th 2025</p>
+            </div>
+            <h2 class="time"><span id="localTime">8:05:01</span> <span class="am-pm" id="localAmPm">PM</span></h2>
         </div>
-        <div class="time"></div>
-      </div>
-      
-      <div id="paris" class="city">
-        <div>
-          <h2>Paris</h2>
-          <div class="date"></div>
-          <a href="https://www.paris.fr/" target="_blank" class="home-link">Go to Paris homepage</a>
-        </div>
-        <div class="time"></div>
-      </div>
-      
-      <div id="tokyo" class="city">
-        <div>
-          <h2>Tokyo</h2>
-          <div class="date"></div>
-          <a href="https://www.metro.tokyo.lg.jp/english/" target="_blank" class="home-link">Go to Tokyo homepage</a>
-        </div>
-        <div class="time"></div>
-      </div>
     </div>
     
-    <footer>
-      <p>This project was coded with ❤️ by Jo Sesay and is <a href="https://github.com/TechJo90/worldclockpproj" target="_blank">open sourced on GitHub</a></p>
-    </footer>
+    <hr>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.43/moment-timezone-with-data.min.js"></script>
-    <script src="javascript/index.js"></script>
-  </body>
+    <div class="clock-container">
+        <div class="city-info">
+            <div>
+                <h2 class="city-name">Los Angeles</h2>
+                <p class="date" id="laDate">March 6th 2025</p>
+                <a href="#" class="homepage-link">Go to Los Angeles homepage</a>
+            </div>
+            <h2 class="time"><span id="laTime">5:05:06</span> <span class="am-pm" id="laAmPm">PM</span></h2>
+        </div>
+    </div>
+    
+    <hr>
+    
+    <div class="clock-container">
+        <div class="city-info">
+            <div>
+                <h2 class="city-name">Paris</h2>
+                <p class="date" id="parisDate">March 7th 2025</p>
+                <a href="#" class="homepage-link">Go to Paris homepage</a>
+            </div>
+            <h2 class="time"><span id="parisTime">2:05:06</span> <span class="am-pm" id="parisAmPm">AM</span></h2>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+  <p>This project was coded with ❤️ by Jo Sesay and is <a href="https://github.com/TechJo90/worldclockpproj" target="_blank">open sourced on GitHub</a></p>
+
+</body>
 </html>
