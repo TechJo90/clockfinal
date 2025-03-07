@@ -1,4 +1,6 @@
+
 function updateTime() {
+  // Los Angeles
   let losAngelesElement = document.querySelector("#los-angeles");
   if (losAngelesElement) {
     let losAngelesDateElement = losAngelesElement.querySelector(".date");
@@ -9,7 +11,8 @@ function updateTime() {
       "h:mm:ss [<small>]A[</small>]"
     );
   }
-
+  
+  // Paris
   let parisElement = document.querySelector("#paris");
   if (parisElement) {
     let parisDateElement = parisElement.querySelector(".date");
@@ -20,7 +23,8 @@ function updateTime() {
       "h:mm:ss [<small>]A[</small>]"
     );
   }
-
+  
+  // Tokyo
   let tokyoElement = document.querySelector("#tokyo");
   if (tokyoElement) {
     let tokyoDateElement = tokyoElement.querySelector(".date");
@@ -31,7 +35,8 @@ function updateTime() {
       "h:mm:ss [<small>]A[</small>]"
     );
   }
-
+  
+  
   let currentLocationElement = document.querySelector("#current-location");
   if (currentLocationElement) {
     let currentDateElement = currentLocationElement.querySelector(".date");
@@ -45,22 +50,24 @@ function updateTime() {
   }
 }
 
+
 function updateCity(event) {
   let cityTimeZone = event.target.value;
   if (cityTimeZone === "current") {
     cityTimeZone = moment.tz.guess();
   }
-
+  
   if (cityTimeZone === "") {
     return;
   }
-
+  
   let cityName = cityTimeZone.replace("_", " ").split("/")[1];
   let cityTime = moment().tz(cityTimeZone);
   let citiesElement = document.querySelector("#cities");
-
+  
+  
   let homepageUrl = `https://en.wikipedia.org/wiki/${cityName}`;
-
+  
   citiesElement.innerHTML = `
   <div class="city">
     <div>
@@ -75,38 +82,42 @@ function updateCity(event) {
   `;
 }
 
+
 function addCurrentLocation() {
   let currentTimeZone = moment.tz.guess();
-  let cityName =
-    currentTimeZone.replace("_", " ").split("/")[1] || "Your Location";
+  let cityName = currentTimeZone.replace("_", " ").split("/")[1] || "Your Location";
   let currentTime = moment().tz(currentTimeZone);
-
+  
   let currentLocationElement = document.createElement("div");
   currentLocationElement.id = "current-location";
   currentLocationElement.classList.add("city");
-
+  
   currentLocationElement.innerHTML = `
     <div>
       <h2>${cityName} (Your Location)</h2>
       <div class="date">${currentTime.format("MMMM Do YYYY")}</div>
     </div>
-    <div class="time">${currentTime.format(
-      "h:mm:ss"
-    )} <small>${currentTime.format("A")}</small></div>
+    <div class="time">${currentTime.format("h:mm:ss")} <small>${currentTime.format("A")}</small></div>
   `;
-
+  
+  
   let container = document.querySelector(".container");
   let citySelector = document.querySelector(".city-selector");
   container.insertBefore(currentLocationElement, citySelector.nextSibling);
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+
+document.addEventListener("DOMContentLoaded", function() {
+  
   updateTime();
-
+  
+ 
   setInterval(updateTime, 1000);
-
+  
+  
   addCurrentLocation();
-
+  
+  
   let citiesSelectElement = document.querySelector("#city");
   citiesSelectElement.addEventListener("change", updateCity);
 });
