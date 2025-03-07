@@ -18,11 +18,11 @@ h2 {
 
 select {
   display: block;
-  width: calc(100% - 20px); 
+  width: 100%;
   font-size: 18px;
   border-radius: 4px;
   padding: 10px;
-  margin: 10px 0; 
+  margin: 10px 0;
 }
 
 .container {
@@ -78,6 +78,9 @@ footer {
   font-size: 18px;
   color: rgba(0, 0, 0, 0.8);
   padding: 20px 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   background-color: #f9f7fe;
 }
 
@@ -96,6 +99,7 @@ footer a:hover {
   }
   .container {
     padding: 20px;
+    margin: 40px auto 100px;
   }
   .time {
     font-size: 36px;
