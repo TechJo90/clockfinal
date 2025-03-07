@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>World Clock - Jo Sesay</title>
+  </head>
+  <body>
+    <h1>World Clock</h1>
+    <div class="container">
+      <div class="city-selector">
+        <select id="city">
+          <option value="">Select a city...</option>
+          <option value="current">My current location</option>
+          <option value="America/Los_Angeles">Los Angeles</option>
+          <option value="Europe/Paris">Paris</option>
+          <option value="Asia/Tokyo">Tokyo</option>
+          <option value="Australia/Sydney">Sydney</option>
+          <option value="Africa/Lagos">Lagos</option>
+        </select>
+      </div>
+      
+      <div id="cities"></div>
+      
+      <div id="los-angeles" class="city">
+        <div>
+          <h2>Los Angeles</h2>
+          <div class="date"></div>
+          <a href="https://www.lacity.gov/" target="_blank" class="home-link">Go to Los Angeles homepage</a>
+        </div>
+        <div class="time"></div>
+      </div>
+      
+      <div id="paris" class="city">
+        <div>
+          <h2>Paris</h2>
+          <div class="date"></div>
+          <a href="https://www.paris.fr/" target="_blank" class="home-link">Go to Paris homepage</a>
+        </div>
+        <div class="time"></div>
+      </div>
+      
+      <div id="tokyo" class="city">
+        <div>
+          <h2>Tokyo</h2>
+          <div class="date"></div>
+          <a href="https://www.metro.tokyo.lg.jp/english/" target="_blank" class="home-link">Go to Tokyo homepage</a>
+        </div>
+        <div class="time"></div>
+      </div>
+    </div>
+    
+    <footer>
+      <p>This project was coded with ❤️ by Jo Sesay and is <a href="https://github.com/TechJo90/worldclockpproj" target="_blank">open sourced on GitHub</a></p>
+    </footer>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.43/moment-timezone-with-data.min.js"></script>
+    <script src="javascript/index.js"></script>
+  </body>
+</html>
