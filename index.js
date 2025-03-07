@@ -1,123 +1,70 @@
+const timeZones = {
+    'NewYork': -5,
+    'LosAngeles': -8,
+    'Paris': 1,
+    'Tokyo': 9,
+    'Sydney': 11,
+    'London': 0
+};
 
-function updateTime() {
-  // Los Angeles
-  let losAngelesElement = document.querySelector("#los-angeles");
-  if (losAngelesElement) {
-    let losAngelesDateElement = losAngelesElement.querySelector(".date");
-    let losAngelesTimeElement = losAngelesElement.querySelector(".time");
-    let losAngelesTime = moment().tz("America/Los_Angeles");
-    losAngelesDateElement.innerHTML = losAngelesTime.format("MMMM Do YYYY");
-    losAngelesTimeElement.innerHTML = losAngelesTime.format(
-      "h:mm:ss [<small>]A[</small>]"
-    );
-  }
-  
-  // Paris
-  let parisElement = document.querySelector("#paris");
-  if (parisElement) {
-    let parisDateElement = parisElement.querySelector(".date");
-    let parisTimeElement = parisElement.querySelector(".time");
-    let parisTime = moment().tz("Europe/Paris");
-    parisDateElement.innerHTML = parisTime.format("MMMM Do YYYY");
-    parisTimeElement.innerHTML = parisTime.format(
-      "h:mm:ss [<small>]A[</small>]"
-    );
-  }
-  
-  // Tokyo
-  let tokyoElement = document.querySelector("#tokyo");
-  if (tokyoElement) {
-    let tokyoDateElement = tokyoElement.querySelector(".date");
-    let tokyoTimeElement = tokyoElement.querySelector(".time");
-    let tokyoTime = moment().tz("Asia/Tokyo");
-    tokyoDateElement.innerHTML = tokyoTime.format("MMMM Do YYYY");
-    tokyoTimeElement.innerHTML = tokyoTime.format(
-      "h:mm:ss [<small>]A[</small>]"
-    );
-  }
-  
-  
-  let currentLocationElement = document.querySelector("#current-location");
-  if (currentLocationElement) {
-    let currentDateElement = currentLocationElement.querySelector(".date");
-    let currentTimeElement = currentLocationElement.querySelector(".time");
-    let currentTimeZone = moment.tz.guess();
-    let currentTime = moment().tz(currentTimeZone);
-    currentDateElement.innerHTML = currentTime.format("MMMM Do YYYY");
-    currentTimeElement.innerHTML = currentTime.format(
-      "h:mm:ss [<small>]A[</small>]"
-    );
-  }
+const localOffset = -(new Date().getTimezoneOffset() / 60);
+
+function updateClocks() {
+    const now = new Date();
+    
+    updateClock('local', now, localOffset);
+    updateClock('la', now, timeZones.LosAngeles);
+    updateClock('paris', now, timeZones.Paris);
 }
 
-
-function updateCity(event) {
-  let cityTimeZone = event.target.value;
-  if (cityTimeZone === "current") {
-    cityTimeZone = moment.tz.guess();
-  }
-  
-  if (cityTimeZone === "") {
-    return;
-  }
-  
-  let cityName = cityTimeZone.replace("_", " ").split("/")[1];
-  let cityTime = moment().tz(cityTimeZone);
-  let citiesElement = document.querySelector("#cities");
-  
-  
-  let homepageUrl = `https://en.wikipedia.org/wiki/${cityName}`;
-  
-  citiesElement.innerHTML = `
-  <div class="city">
-    <div>
-      <h2>${cityName}</h2>
-      <div class="date">${cityTime.format("MMMM Do YYYY")}</div>
-      <a href="${homepageUrl}" class="home-link" target="_blank">Go to ${cityName} homepage</a>
-    </div>
-    <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
-    "A"
-  )}</small></div>
-  </div>
-  `;
+function updateClock(id, baseTime, offset) {
+    const time = new Date(baseTime);
+    
+    time.setHours(time.getUTCHours() + offset);
+    
+    let hours = time.getHours();
+    const minutes = String(time.getMinutes()).padStart(2, '0');
+    const seconds = String(time.getSeconds()).padStart(2, '0');
+    
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    
+    document.getElementById(`${id}Time`).textContent = `${hours}:${minutes}:${seconds}`;
+    document.getElementById(`${id}AmPm`).textContent = ampm;
+    
+    const day = time.getDate();
+    let dayStr = day.toString();
+    
+    if (day % 10 === 1 && day !== 11) {
+        dayStr += 'st';
+    } else if (day % 10 === 2 && day !== 12) {
+        dayStr += 'nd';
+    } else if (day % 10 === 3 && day !== 13) {
+        dayStr += 'rd';
+    } else {
+        dayStr += 'th';
+    }
+    
+    const monthStr = time.toLocaleString('en-US', { month: 'long' });
+    const yearStr = time.getFullYear();
+    
+    const formattedDate = `${monthStr} ${dayStr} ${yearStr}`;
+    
+    if (document.getElementById(`${id}Date`)) {
+        document.getElementById(`${id}Date`).textContent = formattedDate;
+    }
 }
 
-
-function addCurrentLocation() {
-  let currentTimeZone = moment.tz.guess();
-  let cityName = currentTimeZone.replace("_", " ").split("/")[1] || "Your Location";
-  let currentTime = moment().tz(currentTimeZone);
-  
-  let currentLocationElement = document.createElement("div");
-  currentLocationElement.id = "current-location";
-  currentLocationElement.classList.add("city");
-  
-  currentLocationElement.innerHTML = `
-    <div>
-      <h2>${cityName} (Your Location)</h2>
-      <div class="date">${currentTime.format("MMMM Do YYYY")}</div>
-    </div>
-    <div class="time">${currentTime.format("h:mm:ss")} <small>${currentTime.format("A")}</small></div>
-  `;
-  
-  
-  let container = document.querySelector(".container");
-  let citySelector = document.querySelector(".city-selector");
-  container.insertBefore(currentLocationElement, citySelector.nextSibling);
-}
-
-
-document.addEventListener("DOMContentLoaded", function() {
-  
-  updateTime();
-  
- 
-  setInterval(updateTime, 1000);
-  
-  
-  addCurrentLocation();
-  
-  
-  let citiesSelectElement = document.querySelector("#city");
-  citiesSelectElement.addEventListener("change", updateCity);
+document.getElementById('citySelect').addEventListener('change', function() {
+    const selectedCity = this.value;
+    if (selectedCity) {
+        document.getElementById('localCityName').textContent = selectedCity.replace(/([A-Z])/g, ' $1').trim();
+    } else {
+        document.getElementById('localCityName').textContent = 'New York';
+    }
 });
+
+updateClocks();
+setInterval(updateClocks, 1000);
